@@ -1,5 +1,6 @@
 package com.example.coderswag.Controller
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -10,6 +11,7 @@ import com.example.coderswag.Adapters.CategoryRecycleAdapter
 import com.example.coderswag.Model.Category
 import com.example.coderswag.R
 import com.example.coderswag.Services.DataService
+import com.example.coderswag.Utilities.EXTRA_CATEGORY
 import com.example.coderswag.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +24,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 //        setContentView(R.layout.activity_main)
         adapter= CategoryRecycleAdapter(this,DataService.categories)
+        { category ->
+            val productIntent=Intent(this,ProductsActivity::class.java)
+            productIntent.putExtra(EXTRA_CATEGORY,category.title)
+            startActivity(productIntent)
+        }
         binding.categoryListView.adapter=adapter
 
         val layoutManager=LinearLayoutManager(this)
@@ -30,5 +37,6 @@ class MainActivity : AppCompatActivity() {
 //        binding.categoryListView.setOnItemClickListener { adapterView, view, i, l ->
 //            val category=DataService.categories[i]
 //            Toast.makeText(this,"You clicked on the ${category.title} cell",Toast.LENGTH_SHORT).show()
-        }
+
+    }
     }
